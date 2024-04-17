@@ -510,7 +510,7 @@ public:
 
 	const char* GetFilename() const override { return "eeMemory.bin"; }
 	u8* GetDataPtr() const override { return eeMem->Main; }
-	uint GetDataSize() const override { return sizeof(eeMem->Main); }
+	uint GetDataSize() const override { return Ps2MemSize::MainRam; }
 
 	virtual bool FreezeIn(zip_file_t* zf) const override
 	{

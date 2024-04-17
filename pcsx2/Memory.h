@@ -26,9 +26,9 @@ namespace HostMemoryMap
 	static constexpr u32 EEmemOffset = 0x00000000;
 	static constexpr u32 EEmemSize = 0x8B00000;
 
-	// IOP main memory (2MB + 64K + 256b, rounded up to 3MB for simplicity).
+	// IOP main memory (8MB + 64K + 256b, rounded up to 9MB for simplicity).
 	static constexpr u32 IOPmemOffset = EEmemOffset + EEmemSize;
-	static constexpr u32 IOPmemSize = 0x300000;
+	static constexpr u32 IOPmemSize = _1mb * 9;
 
 	// VU0 and VU1 memory (40KB, rounded up to 1MB for simplicity).
 	static constexpr u32 VUmemOffset = IOPmemOffset + IOPmemSize;
@@ -154,14 +154,14 @@ namespace SysMemory
 #define psHu64(mem) (*(u64*)&eeHw[(mem)&0xffff])
 #define psHu128(mem) (*(u128*)&eeHw[(mem)&0xffff])
 
-#define psMs8(mem) (*(s8*)&eeMem->Main[(mem)&0x1ffffff])
-#define psMs16(mem) (*(s16*)&eeMem->Main[(mem)&0x1ffffff])
-#define psMs32(mem) (*(s32*)&eeMem->Main[(mem)&0x1ffffff])
-#define psMs64(mem) (*(s64*)&eeMem->Main[(mem)&0x1ffffff])
-#define psMu8(mem) (*(u8*)&eeMem->Main[(mem)&0x1ffffff])
-#define psMu16(mem) (*(u16*)&eeMem->Main[(mem)&0x1ffffff])
-#define psMu32(mem) (*(u32*)&eeMem->Main[(mem)&0x1ffffff])
-#define psMu64(mem) (*(u64*)&eeMem->Main[(mem)&0x1ffffff])
+#define psMs8(mem) (*(s8*)&eeMem->Main[(mem)&0x7ffffff])
+#define psMs16(mem) (*(s16*)&eeMem->Main[(mem)&0x7ffffff])
+#define psMs32(mem) (*(s32*)&eeMem->Main[(mem)&0x7ffffff])
+#define psMs64(mem) (*(s64*)&eeMem->Main[(mem)&0x7ffffff])
+#define psMu8(mem) (*(u8*)&eeMem->Main[(mem)&0x7ffffff])
+#define psMu16(mem) (*(u16*)&eeMem->Main[(mem)&0x7ffffff])
+#define psMu32(mem) (*(u32*)&eeMem->Main[(mem)&0x7ffffff])
+#define psMu64(mem) (*(u64*)&eeMem->Main[(mem)&0x7ffffff])
 
 #define psRs8(mem) (*(s8*)&eeMem->ROM[(mem)&0x3fffff])
 #define psRs16(mem) (*(s16*)&eeMem->ROM[(mem)&0x3fffff])

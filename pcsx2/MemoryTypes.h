@@ -6,15 +6,18 @@
 
 namespace Ps2MemSize
 {
-	static constexpr u32 MainRam = _32mb;      // 32 MB main memory.
+	static constexpr u32 BaseRam = _32mb;      // 32 MB base memory.
 	static constexpr u32 ExtraRam = _1mb * 96; // 32+96 MB devkit memory.
+	static constexpr u32 MainRam = BaseRam + ExtraRam; // 128 MB main memory
 	static constexpr u32 Rom = _1mb * 4;       // 4 MB main rom
 	static constexpr u32 Rom1 = _1mb * 4;      // DVD player
 	static constexpr u32 Rom2 = 0x00080000;    // Chinese rom extension
 	static constexpr u32 Hardware = _64kb;
 	static constexpr u32 Scratch = _16kb;
 
-	static constexpr u32 IopRam = _1mb * 2; // 2MB main ram on the IOP.
+	static constexpr u32 IopBaseRam = _1mb * 2; // 2MB base ram on the IOP.
+	static constexpr u32 IopExtraRam = _1mb * 6; // 2+6 MB devkit IOP memory.
+	static constexpr u32 IopRam = IopBaseRam + IopExtraRam; // 8MB main ram on the IOP.
 	static constexpr u32 IopHardware = _64kb;
 
 	static constexpr u32 GSregs = 0x00002000; // 8k for the GS registers and stuff.
@@ -28,7 +31,7 @@ typedef u128 mem128_t;
 
 struct EEVM_MemoryAllocMess
 {
-	u8 Main[Ps2MemSize::MainRam];         // Main memory (hard-wired to 32MB)
+	u8 Main[Ps2MemSize::BaseRam];         // Base memory (hard-wired to 32MB)
 	u8 ExtraMemory[Ps2MemSize::ExtraRam]; // Extra memory (32MB up to 128MB => 96MB).
 	u8 Scratch[Ps2MemSize::Scratch];      // Scratchpad!
 	u8 ROM[Ps2MemSize::Rom];              // Boot rom (4MB)
@@ -46,7 +49,8 @@ struct EEVM_MemoryAllocMess
 
 struct IopVM_MemoryAllocMess
 {
-	u8 Main[Ps2MemSize::IopRam]; // Main memory (hard-wired to 2MB)
+	u8 Main[Ps2MemSize::IopBaseRam]; // Base memory (hard-wired to 2MB)
+	u8 ExtraMemory[Ps2MemSize::IopExtraRam]; // Extra memory (2MB up to 8MB => 6MB).
 	u8 P[_64kb];                 // I really have no idea what this is... --air
 	u8 Sif[0x100];               // a few special SIF/SBUS registers (likely not needed)
 };

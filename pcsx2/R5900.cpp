@@ -715,6 +715,7 @@ void eeloadHook()
 	}
 
 	VMManager::Internal::ELFLoadingOnCPUThread(std::move(elfname));
+	vtlb_VMap(Ps2MemSize::BaseRam, Ps2MemSize::BaseRam, Ps2MemSize::ExtraRam);
 }
 
 // Called from recompilers; define is mandatory.
